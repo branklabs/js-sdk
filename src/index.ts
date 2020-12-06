@@ -4,7 +4,13 @@ import { configType } from './types';
 
 import { addStyles, closeWidget, init, isRequired, openWidget } from './lib';
 
-function connect({ key, onClose, onLoad, onSuccess, ...rest }: configType) {
+function connect({
+  key,
+  onClose = () => {},
+  onLoad = () => {},
+  onSuccess,
+  ...rest
+}: configType) {
   if (!(this instanceof connect))
     return new connect({ key, onClose, onSuccess, onLoad, ...rest });
 
@@ -17,7 +23,6 @@ function connect({ key, onClose, onLoad, onSuccess, ...rest }: configType) {
 
 connect.prototype.setup = function () {
   addStyles();
-
   init({
     key: this.key,
     onload: this.load,
@@ -28,6 +33,8 @@ connect.prototype.open = function () {
   openWidget();
 
   function handleModalEvents(event) {
+    console.log({ event });
+
     switch (event.data.type) {
       case 'brank.widget.link_successful':
         this.onSuccess({ ...event.data.data });
@@ -40,11 +47,11 @@ connect.prototype.open = function () {
   }
 
   connect.prototype.eventHandler = handleModalEvents.bind(this);
-  window.addEventListener('brank-message', this.eventHandler, false);
+  window.parent.addEventListener('message', this.eventHandler, false);
 };
 
 connect.prototype.close = function () {
-  window.removeEventListener('brank-message', this.eventHandler, false);
+  window.removeEventListener('message', this.eventHandler, false);
   closeWidget();
   this.onClose();
 };

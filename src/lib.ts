@@ -11,7 +11,7 @@ export function init({ key, onload }: { key: string; onload: () => void }) {
 
   const origin: URL = new URL('https://82aa735bae96.ngrok.io');
   origin.searchParams.set('key', key);
-  origin.searchParams.set('referrer', window.location.href);
+  origin.searchParams.set('clientUrl', window.location.href);
 
   // container for iframe wrapper
   const container: HTMLDivElement = document?.createElement('div');

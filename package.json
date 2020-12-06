@@ -45,6 +45,10 @@
     }
   ],
   "dependencies": {
-    "@types/node": "^14.14.10"
+    "@types/node": "^14.14.10",
+    "tslib": "^2.0.3"
+  },
+  "devDependencies": {
+    "typescript": "^4.1.2"
   }
 }
