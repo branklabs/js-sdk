@@ -40,6 +40,9 @@ function createIframe(origin: URL, onload: () => void) {
     const loader: HTMLElement | null = document.getElementById(
       'brank-widget-loading-indicator'
     );
+
+    if (!loader) return;
+
     if (iframe.style.visibility === 'visible') {
       loader.style.display = 'none';
     }
@@ -68,7 +71,8 @@ export function createLoader() {
 }
 
 export function hideWidget() {
-  const container: HTMLElement = document.getElementById(widgetId);
+  // @ts-ignore
+  const container: HTMLElement = document.getElementById(widgetId); // @ts-ignore
   const iframe: HTMLElement = document.getElementById(iframeId);
 
   container.style.display = 'none';
@@ -78,7 +82,8 @@ export function hideWidget() {
 }
 
 export function showWidget() {
-  const container: HTMLElement = document.getElementById(widgetId);
+  // @ts-ignore
+  const container: HTMLElement = document.getElementById(widgetId); // @ts-ignore
   const iframe: HTMLElement = document.getElementById(iframeId);
 
   container.style.display = 'flex';
@@ -91,13 +96,17 @@ export function openWidget() {
   var container = document.getElementById(widgetId);
   var loader = document.getElementById(loaderId);
   var iframe = document.getElementById(iframeId);
-  container.style.visibility = 'visible';
-  container.style.display = 'flex';
+
+  // @ts-ignore
+  container.style.visibility = 'visible'; // @ts-ignore
+  container.style.display = 'flex'; // @ts-ignore
   loader.style.display = 'block';
 
   setTimeout(() => {
     showWidget();
+    // @ts-ignore
     iframe.focus({ preventScroll: false });
+    // @ts-ignore
     container.focus({ preventScroll: false });
   }, 1000);
 }

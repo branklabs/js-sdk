@@ -15,7 +15,7 @@ function connect({ key, onClose, onLoad, onSuccess, ...rest }: configType) {
   connect.prototype.onSuccess = onSuccess || isRequired('onSuccess callback');
 }
 
-connect.prototype.setup = () => {
+connect.prototype.setup = function () {
   addStyles();
 
   init({
@@ -51,4 +51,4 @@ connect.prototype.close = function () {
 
 window.brank = connect;
 
-export { connect };
+export default connect;
