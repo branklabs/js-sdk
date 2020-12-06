@@ -9,7 +9,7 @@ export function init({ key, onload }: { key: string; onload: () => void }) {
     return;
   }
 
-  const origin: URL = new URL('https://connect.getbrank.com');
+  const origin: URL = new URL('https://82aa735bae96.ngrok.io');
   origin.searchParams.set('key', key);
   origin.searchParams.set('referrer', window.location.href);
 
@@ -106,7 +106,7 @@ export function openWidget() {
     showWidget();
     // @ts-ignore
     iframe.focus({ preventScroll: false });
-    // @ts-ignore
+    // @ts-ignoreg
     container.focus({ preventScroll: false });
   }, 1000);
 }
