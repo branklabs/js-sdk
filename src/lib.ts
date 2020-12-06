@@ -4,12 +4,12 @@ const widgetId: string = 'brank-widget-div';
 const iframeId: string = 'brank-widget-iframe';
 const loaderId: string = 'brank-widget-loading-indicator';
 
-export function init({ key }) {
+export function init({ key, onload }: { key: string; onload: () => void }) {
   if (document.getElementById(widgetId) && document.getElementById(iframeId)) {
     return;
   }
 
-  const origin: URL = new URL('https://google.com');
+  const origin: URL = new URL('https://connect.getbrank.com');
   origin.searchParams.set('key', key);
   origin.searchParams.set('referrer', window.location.href);
 
@@ -19,10 +19,10 @@ export function init({ key }) {
   container.setAttribute('style', containerStyles);
   document.body.insertBefore(container, document.body.childNodes[0]);
 
-  createIframe(origin);
+  createIframe(origin, onload);
 }
 
-function createIframe(origin: URL) {
+function createIframe(origin: URL, onload: () => void) {
   // iframe creator
   const iframe: HTMLIFrameElement = document?.createElement('iframe');
   iframe.setAttribute('src', origin.href);
@@ -43,6 +43,8 @@ function createIframe(origin: URL) {
     if (iframe.style.visibility === 'visible') {
       loader.style.display = 'none';
     }
+
+    onload?.();
   };
 
   const loader = createLoader();
@@ -109,3 +111,7 @@ export function addStyles() {
   styleSheet.innerText = spinnerStyles;
   document.head.appendChild(styleSheet);
 }
+
+export const isRequired = (name: string) => {
+  throw new Error(`${name} is required`);
+};
