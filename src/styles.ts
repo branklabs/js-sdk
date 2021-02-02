@@ -1,6 +1,6 @@
 export const spinnerStyles = `
 .lds-ripple {
-    display: inline-block;
+    display: inline;
     position: relative;
     width: 80px;
     height: 80px;
@@ -59,7 +59,6 @@ export const iframeStyles = `
     width: 100%;
     height: 100%;
     transition: opacity 0.2s ease 0s;
-    visibility: hidden;
     margin: 0;
     top: 0;
     right: 0;

@@ -14,8 +14,7 @@ function connect({
   if (!(this instanceof connect))
     return new connect({ key, onClose, onSuccess, onLoad, ...rest });
 
-  this.key = key || isRequired;
-  connect.prototype.onLoad = onLoad;
+  this.key = key || isRequired('key');
   connect.prototype.onLoad = onLoad;
   connect.prototype.onClose = onClose;
   connect.prototype.onSuccess = onSuccess || isRequired('onSuccess callback');
@@ -29,12 +28,21 @@ connect.prototype.setup = function () {
   });
 };
 
+connect.prototype.showOTP = function () {
+  addStyles();
+  init({
+    key: this.key,
+    onload: this.load,
+    type: 'otp',
+  });
+
+  openWidget();
+};
+
 connect.prototype.open = function () {
   openWidget();
 
-  function handleModalEvents(event) {
-    console.log({ event });
-
+  function handleModalEvents(event: any) {
     switch (event.data.type) {
       case 'brank.widget.link_successful':
         this.onSuccess({ ...event.data.data });

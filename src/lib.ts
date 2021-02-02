@@ -1,17 +1,34 @@
+// @ts-ignore
+
 import { spinnerStyles, containerStyles, iframeStyles } from './styles';
 
 const widgetId: string = 'brank-widget-div';
 const iframeId: string = 'brank-widget-iframe';
 const loaderId: string = 'brank-widget-loading-indicator';
 
-export function init({ key, onload }: { key: string; onload: () => void }) {
+export function init({
+  key,
+  onload,
+  type = 'auth',
+  ...rest
+}: {
+  key: string;
+  onload: () => void;
+  type?: 'otp' | 'bank-statement' | 'auth';
+}) {
   if (document.getElementById(widgetId) && document.getElementById(iframeId)) {
     return;
   }
 
-  const origin: URL = new URL('https://82aa735bae96.ngrok.io');
+  const origin: URL = new URL('http://connect.getbrank.com');
   origin.searchParams.set('key', key);
   origin.searchParams.set('clientUrl', window.location.href);
+  origin.searchParams.set('type', type);
+
+  Object.keys(rest).map((key: string) =>
+    // @ts-ignore
+    origin.searchParams.set(key, rest[key])
+  );
 
   // container for iframe wrapper
   const container: HTMLDivElement = document?.createElement('div');
@@ -37,16 +54,6 @@ function createIframe(origin: URL, onload: () => void) {
   );
 
   iframe.onload = () => {
-    const loader: HTMLElement | null = document.getElementById(
-      'brank-widget-loading-indicator'
-    );
-
-    if (!loader) return;
-
-    if (iframe.style.visibility === 'visible') {
-      loader.style.display = 'none';
-    }
-
     onload?.();
   };
 
@@ -85,11 +92,13 @@ export function showWidget() {
   // @ts-ignore
   const container: HTMLElement = document.getElementById(widgetId); // @ts-ignore
   const iframe: HTMLElement = document.getElementById(iframeId);
+  // var loader = document.getElementById(loaderId);
 
   container.style.display = 'flex';
   iframe.style.display = 'block';
   container.style.visibility = 'visible';
   iframe.style.visibility = 'visible';
+  // loader?.style.display = 'none';
 }
 
 export function openWidget() {
@@ -108,7 +117,7 @@ export function openWidget() {
     iframe.focus({ preventScroll: false });
     // @ts-ignoreg
     container.focus({ preventScroll: false });
-  }, 1000);
+  }, 1500);
 }
 
 export function closeWidget() {
