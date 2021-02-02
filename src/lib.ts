@@ -20,7 +20,7 @@ export function init({
     return;
   }
 
-  const origin: URL = new URL('http://connect.getbrank.com');
+  const origin: URL = new URL('https://connect.getbrank.com');
   origin.searchParams.set('key', key);
   origin.searchParams.set('clientUrl', window.location.href);
   origin.searchParams.set('type', type);
