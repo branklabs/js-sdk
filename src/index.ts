@@ -66,6 +66,8 @@ connect.prototype.close = function () {
   this.onClose();
 };
 
-window.brank = connect;
+if (typeof window !== 'undefined') {
+  window.Brank = connect;
+}
 
 export default connect;
