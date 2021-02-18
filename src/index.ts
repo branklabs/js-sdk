@@ -11,6 +11,8 @@ function connect({
   onSuccess,
   ...rest
 }: configType) {
+  if (typeof window === 'undefined') return;
+
   if (!(this instanceof connect))
     return new connect({ key, onClose, onSuccess, onLoad, ...rest });
 

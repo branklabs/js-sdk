@@ -16,13 +16,16 @@ export function init({
   onload: () => void;
   type?: 'otp' | 'bank-statement' | 'auth';
 }) {
+  // safe guard for SSR
+  if (!document || !window) return;
+
   if (document.getElementById(widgetId) && document.getElementById(iframeId)) {
     return;
   }
 
   const origin: URL = new URL('https://connect.getbrank.com');
   origin.searchParams.set('key', key);
-  origin.searchParams.set('clientUrl', window.location.href);
+  origin.searchParams.set('clientUrl', window?.location.href);
   origin.searchParams.set('type', type);
 
   Object.keys(rest).map((key: string) =>
