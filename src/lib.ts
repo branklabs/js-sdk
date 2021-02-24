@@ -6,16 +6,13 @@ const widgetId: string = 'brank-widget-div';
 const iframeId: string = 'brank-widget-iframe';
 const loaderId: string = 'brank-widget-loading-indicator';
 
-export function init({
-  key,
-  onload,
-  type = 'auth',
-  ...rest
-}: {
+interface IInit {
   key: string;
   onload: () => void;
   type?: 'otp' | 'bank-statement' | 'auth';
-}) {
+}
+
+export function init({ key, onload, type = 'auth', ...rest }: IInit) {
   // safe guard for SSR
   if (!document || !window) return;
 
