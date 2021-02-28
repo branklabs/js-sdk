@@ -47,7 +47,8 @@ connect.prototype.open = function () {
   function handleModalEvents(event: any) {
     switch (event.data.type) {
       case 'brank.widget.link_successful':
-        this.onSuccess(event?.data?.contractCode);
+        this.onSuccess(event?.data?.code);
+        connect.prototype.close();
         break;
 
       case 'brank.widget.close':

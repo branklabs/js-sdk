@@ -16,11 +16,11 @@ export function init({ key, onload, type = 'auth', ...rest }: IInit) {
   // safe guard for SSR
   if (!document || !window) return;
 
-  if (document.getElementById(widgetId) && document.getElementById(iframeId)) {
-    return;
-  }
+  // if (document.getElementById(widgetId) && document.getElementById(iframeId)) {
+  //   return;
+  // }
 
-  const origin: URL = new URL('http://localhost:1234');
+  const origin: URL = new URL('https://connect.getbrank.com');
   origin.searchParams.set('key', key);
   origin.searchParams.set('clientUrl', window?.location.href);
   origin.searchParams.set('type', type);
