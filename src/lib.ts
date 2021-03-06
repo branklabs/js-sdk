@@ -21,6 +21,14 @@ export function init({ key, onload, type = 'auth', ...rest }: IInit) {
   origin.searchParams.set('clientUrl', window?.location.href);
   origin.searchParams.set('type', type);
 
+  if (document.getElementById(widgetId) && document.getElementById(iframeId)) {
+    // @ts-ignore
+    const iframe: HTMLIFrameElement = document.getElementById(iframeId);
+    iframe?.setAttribute('src', origin.href);
+    console.log({ iframe });
+    return;
+  }
+
   Object.keys(rest).map((key: string) =>
     // @ts-ignore
     origin.searchParams.set(key, rest[key])
@@ -94,7 +102,6 @@ export function showWidget() {
   iframe.style.display = 'block';
   container.style.visibility = 'visible';
   iframe.style.visibility = 'visible';
-  // loader?.style.display = 'none';
 }
 
 export function openWidget() {
