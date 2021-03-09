@@ -10,22 +10,30 @@ interface IInit {
   key: string;
   onload: () => void;
   type?: 'otp' | 'bank-statement' | 'auth';
+  env?: 'sandbox' | 'production' | 'development';
 }
 
-export function init({ key, onload, type = 'auth', ...rest }: IInit) {
+export function init({
+  env = 'development',
+  key,
+  onload,
+  type = 'auth',
+  ...rest
+}: IInit) {
   // safe guard for SSR
   if (!document || !window) return;
 
-  const origin: URL = new URL('https://connect.getbrank.com');
+  // const origin: URL = new URL('https://connect.getbrank.com');
+  const origin: URL = new URL('http://localhost:1234');
   origin.searchParams.set('key', key);
   origin.searchParams.set('clientUrl', window?.location.href);
   origin.searchParams.set('type', type);
+  origin.searchParams.set('env', env);
 
   if (document.getElementById(widgetId) && document.getElementById(iframeId)) {
     // @ts-ignore
     const iframe: HTMLIFrameElement = document.getElementById(iframeId);
     iframe?.setAttribute('src', origin.href);
-    console.log({ iframe });
     return;
   }
 
@@ -120,7 +128,7 @@ export function openWidget() {
     iframe.focus({ preventScroll: false });
     // @ts-ignoreg
     container.focus({ preventScroll: false });
-  }, 1500);
+  }, 500);
 }
 
 export function closeWidget() {

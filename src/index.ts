@@ -9,14 +9,16 @@ function connect({
   onClose = () => {},
   onLoad = () => {},
   onSuccess,
+  env,
   ...rest
 }: configType) {
   if (typeof window === 'undefined') return;
 
   if (!(this instanceof connect))
-    return new connect({ key, onClose, onSuccess, onLoad, ...rest });
+    return new connect({ key, onClose, onSuccess, onLoad, env, ...rest });
 
   this.key = key || isRequired('key');
+  this.env = env;
   connect.prototype.onLoad = onLoad;
   connect.prototype.onClose = onClose;
   connect.prototype.onSuccess = onSuccess || isRequired('onSuccess callback');
@@ -26,6 +28,7 @@ connect.prototype.setup = function () {
   addStyles();
   init({
     key: this.key,
+    env: this.env,
     onload: this.load,
   });
 };
