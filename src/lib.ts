@@ -23,7 +23,7 @@ export function init({
   // safe guard for SSR
   if (!document || !window) return;
 
-  const origin: URL = new URL('https://connect.getbrank.com');
+  const origin: URL = new URL('https://connect.withbrank.com');
   // const origin: URL = new URL('http://localhost:1234');
   origin.searchParams.set('key', key);
   origin.searchParams.set('clientUrl', window?.location.href);
